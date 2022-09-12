@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import TodosList from "./TodosList";
+import Header from "./header";
 
 class TodoContainer extends React.Component {
   state = {
@@ -22,10 +23,23 @@ class TodoContainer extends React.Component {
     ],
   };
 
+   changeHandler = (id) =>{
+    this.setState(
+         this.state.todos.map(item => {
+            if (item.id === id){
+                item.completed = !item.completed;
+            }
+            return item
+        })
+     )
+
+  }
+
   render() {
     return (
       <div>
-        <TodosList todos={this.state.todos} />
+        <Header />
+        <TodosList todos={this.state.todos} changeHandlerProps = {this.changeHandler} />
       </div>
     );
   }
