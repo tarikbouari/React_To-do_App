@@ -1,27 +1,17 @@
-import React, { Component } from "react";
+import React from "react";
 import TodosList from "./TodosList";
 import Header from "./header";
 import InputTodo from "./inputTodo";
+import { v4 as uuidv4 } from "uuid";
+
+
+const data =  JSON.parse(localStorage.getItem("todo"))
+
 
 class TodoContainer extends React.Component {
+   
   state = {
-    todos: [
-      {
-        id: 1,
-        title: "Setup development environment",
-        completed: true,
-      },
-      {
-        id: 2,
-        title: "Develop website and add content",
-        completed: false,
-      },
-      {
-        id: 3,
-        title: "Deploy to live server",
-        completed: false,
-      },
-    ],
+    todos: data || []
   };
 
   changeHandler = (id) => {
@@ -38,8 +28,8 @@ class TodoContainer extends React.Component {
     }));
   };
 
-  deleteItem = (id) => {
-    this.setState({
+  deleteItem = (id) => { 
+     this.setState({
       todos: [
         ...this.state.todos.filter((item) => {
           if (item.id !== id) return item;
@@ -48,27 +38,39 @@ class TodoContainer extends React.Component {
     });
   };
 
+  componentDidUpdate(prevState){
+    if(prevState.todos !== this.state.todos){
+      localStorage.setItem('todo', JSON.stringify(this.state.todos))
+    }
+  }
+
   addTodoItem = (title) => {
+    const data = JSON.parse(localStorage.getItem("todo")) || [];
     const newTodo = {
-      id: 4,
+      id: uuidv4(),
       title: title,
       completed: false,
     };
     this.setState({
       todos: [...this.state.todos, newTodo],
     });
+    data.push(newTodo)
+    localStorage.setItem('todo', JSON.stringify(data)) 
   };
 
   render() {
+    console.log(this.state.todos);
     return (
-      <div>
-        <Header />
-        <InputTodo addTodoProps={this.addTodoItem} />
-        <TodosList
-          todos={this.state.todos}
-          changeHandlerProps={this.changeHandler}
-          deleteHandleProps={this.deleteItem}
-        />
+      <div className="container">
+        <div className="inner">
+          <Header />
+          <InputTodo addTodoProps={this.addTodoItem} />
+          <TodosList
+            todos={this.state.todos}
+            changeHandlerProps={this.changeHandler}
+            deleteHandleProps={this.deleteItem}
+          />
+        </div>
       </div>
     );
   }
