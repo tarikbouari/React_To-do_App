@@ -1,17 +1,14 @@
-import React from "react";
-import TodosList from "./TodosList";
-import Header from "./header";
-import InputTodo from "./inputTodo";
-import { v4 as uuidv4 } from "uuid";
+import React from 'react';
+import { v4 as uuidv4 } from 'uuid';
+import TodosList from './TodosList';
+import Header from './header';
+import InputTodo from './inputTodo';
 
-
-const data =  JSON.parse(localStorage.getItem("todo"))
-
+const data = JSON.parse(localStorage.getItem('todo'));
 
 class TodoContainer extends React.Component {
-   
   state = {
-    todos: data || []
+    todos: data || [],
   };
 
   changeHandler = (id) => {
@@ -28,8 +25,8 @@ class TodoContainer extends React.Component {
     }));
   };
 
-  deleteItem = (id) => { 
-     this.setState({
+  deleteItem = (id) => {
+    this.setState({
       todos: [
         ...this.state.todos.filter((item) => {
           if (item.id !== id) return item;
@@ -38,24 +35,24 @@ class TodoContainer extends React.Component {
     });
   };
 
-  componentDidUpdate(prevState){
-    if(prevState.todos !== this.state.todos){
-      localStorage.setItem('todo', JSON.stringify(this.state.todos))
+  componentDidUpdate(prevState) {
+    if (prevState.todos !== this.state.todos) {
+      localStorage.setItem('todo', JSON.stringify(this.state.todos));
     }
   }
 
   addTodoItem = (title) => {
-    const data = JSON.parse(localStorage.getItem("todo")) || [];
+    const data = JSON.parse(localStorage.getItem('todo')) || [];
     const newTodo = {
       id: uuidv4(),
-      title: title,
+      title,
       completed: false,
     };
     this.setState({
       todos: [...this.state.todos, newTodo],
     });
-    data.push(newTodo)
-    localStorage.setItem('todo', JSON.stringify(data)) 
+    data.push(newTodo);
+    localStorage.setItem('todo', JSON.stringify(data));
   };
 
   render() {
