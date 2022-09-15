@@ -72,3 +72,29 @@ body {
     gap: 1rem;
     ;
   } */
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  height: 70px;
+  width: 100%;
+  background-color: antiquewhite;
+  align-items: center;
+  padding: 0 1rem;
+}
+
+.navbar ul {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.footer {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+}
