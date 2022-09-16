@@ -19,7 +19,7 @@ class InputTodo extends Component {
         title: ' ',
       });
     } else {
-      alert('please write item');
+      alert('please Add an item');
     }
   };
 
